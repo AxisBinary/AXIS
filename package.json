@@ -1,0 +1,23 @@
+{
+  "name": "axis",
+  "version": "1.0.0",
+  "description": "security-app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AxisBinary/AXIS.git"
+  },
+  "author": "AXIS-Limited",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AxisBinary/AXIS/issues"
+  },
+  "homepage": "https://github.com/AxisBinary/AXIS#readme",
+  "devDependencies": {
+    "electron": "^36.3.1"
+  }
+}
