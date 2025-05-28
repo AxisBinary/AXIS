@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconSwitcherContainer = document.getElementById('iconSwitcher');
     const activeIndicator = document.getElementById('activeIndicator');
     const keyAuthTab = document.getElementById('keyAuthTab');
-    const linkAuthTab = document.getElementById('linkAuthTab'); // CHANGED from nfcAuthTab
+    const linkAuthTab = document.getElementById('linkAuthTab');
     const keyAuthSection = document.getElementById('keyAuthSection');
-    const linkAuthSection = document.getElementById('linkAuthSection'); // CHANGED from nfcAuthSection
+    const linkAuthSection = document.getElementById('linkAuthSection');
 
-    // Form Elements (for Key & Password Auth)
+    // Form Elements
     const accessCodeInput = document.getElementById('accessCode');
     const accessPasswordInput = document.getElementById('accessPassword');
     const accessCodeForm = document.getElementById('accessCodeForm');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const keyIcon = keyAuthTab.querySelector('svg');
-    const linkIcon = linkAuthTab.querySelector('svg'); // CHANGED from nfcIcon
+    const linkIcon = linkAuthTab.querySelector('svg');
 
     function updateIndicatorAndIcons(activeTab, inactiveTab, activeSvg, inactiveSvg) {
         const activeIconColor = 'text-sky-600';
@@ -39,41 +39,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchAuthMethod(selectedMethod) {
         if (selectedMethod === 'key') {
-            updateIndicatorAndIcons(keyAuthTab, linkAuthTab, keyIcon, linkIcon); // CHANGED
+            updateIndicatorAndIcons(keyAuthTab, linkAuthTab, keyIcon, linkIcon);
             keyAuthSection.classList.remove('hidden');
-            linkAuthSection.classList.add('hidden'); // CHANGED
-        } else if (selectedMethod === 'link') { // CHANGED from 'nfc'
-            updateIndicatorAndIcons(linkAuthTab, keyAuthTab, linkIcon, keyIcon); // CHANGED
-            linkAuthSection.classList.remove('hidden'); // CHANGED
+            linkAuthSection.classList.add('hidden');
+        } else if (selectedMethod === 'link') {
+            updateIndicatorAndIcons(linkAuthTab, keyAuthTab, linkIcon, keyIcon);
+            linkAuthSection.classList.remove('hidden');
             keyAuthSection.classList.add('hidden');
         }
     }
-    
+
     function initializeSwitcher() {
         const initialMethod = 'key';
-        const defaultActiveTab = (initialMethod === 'key') ? keyAuthTab : linkAuthTab; // CHANGED
-        
+        const defaultActiveTab = (initialMethod === 'key') ? keyAuthTab : linkAuthTab;
+
         activeIndicator.style.width = defaultActiveTab.offsetWidth + 'px';
         activeIndicator.style.left = defaultActiveTab.offsetLeft + 'px';
-        
+
         switchAuthMethod(initialMethod);
     }
 
     keyAuthTab.addEventListener('click', () => switchAuthMethod('key'));
-    linkAuthTab.addEventListener('click', () => switchAuthMethod('link')); // CHANGED from nfcAuthTab
-
+    linkAuthTab.addEventListener('click', () => switchAuthMethod('link'));
     window.addEventListener('load', initializeSwitcher);
 
-
-    // --- Access Key & Password Logic (remains the same) ---
+    // --- Access Code Formatting & Basic Validation ---
     const format = [2, 2, 3, 3];
     const totalCodeLength = format.reduce((a, b) => a + b, 0);
     const maxLengthWithDashes = totalCodeLength + (format.length - 1);
 
-    if(accessCodeInput) accessCodeInput.setAttribute('maxlength', maxLengthWithDashes);
+    if (accessCodeInput) {
+        accessCodeInput.setAttribute('maxlength', maxLengthWithDashes);
 
-    if(accessCodeInput) {
-        accessCodeInput.addEventListener('input', function(e) {
+        accessCodeInput.addEventListener('input', function (e) {
             let input = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             let originalCursorPosition = e.target.selectionStart;
             let formattedInput = '';
@@ -83,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < format.length; i++) {
                 const segmentLength = format[i];
                 if (rawIndex < input.length) {
-                    const segment = input.substring(rawIndex, Math.min(rawIndex + segmentLength, input.length));
+                    const segment = input.substring(rawIndex, rawIndex + segmentLength);
                     formattedInput += segment;
                     rawIndex += segment.length;
                     if (rawIndex < input.length && i < format.length - 1) {
@@ -96,9 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.value = formattedInput;
 
             let newCursorPosition = originalCursorPosition;
-            let dashesInNewFormattedUpToOriginalRaw = (formattedInput.substring(0, Math.max(0, originalCursorPosition - dashesBeforeCursorInOriginal) + (formattedInput.match(/-/g) || []).length ).match(/-/g) || []).length;
-            
-            if(e.inputType && e.inputType.startsWith('delete')) {
+            let dashesInNewFormattedUpToOriginalRaw = (formattedInput.substring(0, Math.max(0, originalCursorPosition - dashesBeforeCursorInOriginal) + (formattedInput.match(/-/g) || []).length).match(/-/g) || []).length;
+
+            if (e.inputType && e.inputType.startsWith('delete')) {
                 newCursorPosition = originalCursorPosition;
             } else {
                 newCursorPosition = (originalCursorPosition - dashesBeforeCursorInOriginal) + dashesInNewFormattedUpToOriginalRaw;
@@ -122,64 +120,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (accessCodeForm) {
-        accessCodeForm.addEventListener('submit', async function(event) {
+        accessCodeForm.addEventListener('submit', function (event) {
             event.preventDefault();
-            if(validationMessageCode) validationMessageCode.textContent = '';
-            if(validationMessagePassword) validationMessagePassword.textContent = '';
+
+            if (validationMessageCode) validationMessageCode.textContent = '';
+            if (validationMessagePassword) validationMessagePassword.textContent = '';
 
             const enteredRawCode = accessCodeInput ? accessCodeInput.value.replace(/-/g, '') : '';
             const enteredPassword = accessPasswordInput ? accessPasswordInput.value : '';
 
             if (enteredRawCode.length !== totalCodeLength) {
-                if(validationMessageCode) validationMessageCode.textContent = 'Invalid code length. Please enter the full code.';
-                if(accessCodeInput) accessCodeInput.focus();
+                if (validationMessageCode) validationMessageCode.textContent = 'Invalid code length. Please enter the full code.';
+                if (accessCodeInput) accessCodeInput.focus();
                 return;
             }
 
             const typeAndExtra = enteredRawCode.substring(7);
             if (typeAndExtra.length !== 3) {
-                 if(validationMessageCode) validationMessageCode.textContent = 'Invalid code format (suffix).';
-                 if(accessCodeInput) accessCodeInput.focus();
-                 return;
+                if (validationMessageCode) validationMessageCode.textContent = 'Invalid code format (suffix).';
+                if (accessCodeInput) accessCodeInput.focus();
+                return;
             }
-            const typeIndicator = typeAndExtra.charAt(2);
 
             if (!enteredPassword && accessPasswordInput) {
-                if(validationMessagePassword) validationMessagePassword.textContent = 'Password is required.';
+                if (validationMessagePassword) validationMessagePassword.textContent = 'Password is required.';
                 accessPasswordInput.focus();
                 return;
             }
 
-            try {
-                const response = await fetch('./credentials.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const users = await response.json();
-                const foundUser = users.find(user => user.code === enteredRawCode && user.pass === enteredPassword);
-
-                if (foundUser) {
-                    let codeTypeMessage = '';
-                    if (typeIndicator === '2') {
-                        codeTypeMessage = 'Normal Code';
-                    } else if (typeIndicator === '9') {
-                        codeTypeMessage = 'Testing Code';
-                    } else {
-                        if(validationMessageCode) validationMessageCode.textContent = 'Invalid code type in input.';
-                        if(accessCodeInput) accessCodeInput.focus();
-                        return;
-                    }
-                    alert(`Nice! (${codeTypeMessage} Authenticated!)`);
-                    console.log("Authenticated User:", foundUser);
-                    if(accessCodeForm) accessCodeForm.reset();
-                } else {
-                    if(validationMessagePassword) validationMessagePassword.textContent = 'Invalid Access Key or Password.';
-                    if(accessPasswordInput) accessPasswordInput.focus();
-                }
-            } catch (error) {
-                console.error("Error loading or parsing credentials:", error);
-                if(validationMessagePassword) validationMessagePassword.textContent = 'Error validating credentials. Please try again.';
-            }
+            alert('Form passed front-end validation. Ready to send to backend.');
         });
     }
 });
