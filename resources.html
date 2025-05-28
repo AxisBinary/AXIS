@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS Security Dashboard - Resources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar.collapsed {
+            width: 80px;
+        }
+        .sidebar.collapsed .nav-text {
+            display: none;
+        }
+        .main-content {
+            transition: all 0.3s ease;
+        }
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+        .nav-item a.active {
+            background-color: #0284c7;
+            color: white;
+            border-radius: 6px;
+        }
+        .nav-item a.active:hover {
+            background-color: #0369a1;
+        }
+        .section-divider {
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .sidebar.collapsed .section-divider {
+            display: none;
+        }
+        .sidebar-divider {
+            border-bottom-width: 1px;
+        }
+        *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        *::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        *::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0284c7, #22d3ee);
+            border-radius: 4px;
+        }
+        *::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #0369a1, #06b6d4);
+        }
+        *::-webkit-scrollbar-button {
+            display: none;
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #0284c7 #f1f5f9;
+        }
+        select.filter-select {
+            padding-right: 3rem; /* Increased right padding for more arrow spacing */
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white shadow-md w-64 fixed h-full flex flex-col">
+            <div class="p-4 border-b sidebar-divider border-gray-200 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-gray-800 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-sky-600 mr-1.5 group-hover:text-sky-700 transition-colors">
+                        <path d="M12 22s8-4 8-10V5 l-8-3-8 3v7c0 6 8 10 8 10"/>
+                        <path d="m9 12 l 2 2 4-4"/>
+                    </svg>
+                    <span class="nav-text">AXIS</span>
+                </h1>
+                <button id="toggleSidebar" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <div class="section-divider nav-text">Navigation</div>
+                <ul>
+                    <li class="mb-2 nav-item">
+                        <a href="index.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="mb-2 nav-item">
+                        <a href="access.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="key" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Access</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="section-divider nav-text">Management</div>
+                <ul>
+                    <li class="mb-2 nav-item">
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Self Service</span>
+                        </a>
+                    </li>
+                    <li class="mb-2 nav-item">
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Roles</span>
+                        </a>
+                    </li>
+                    <li class="mb-2 nav-item">
+                        <a href="resources.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 active">
+                            <i data-lucide="folder" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Resources</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="section-divider nav-text">System</div>
+                <ul>
+                    <li class="mb-2 nav-item">
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="cpu" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Technology</span>
+                        </a>
+                    </li>
+                    <li class="mb-2 nav-item">
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Notifications</span>
+                        </a>
+                    </li>
+                    <li class="mb-2 nav-item">
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                            <i data-lucide="settings" class="w-5 h-5"></i>
+                            <span class="nav-text ml-3">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content ml-64 flex-grow overflow-y-auto">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="px-6 py-3 flex justify-end items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <button class="p-2 rounded-full hover:bg-gray-100">
+                            <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                        </button>
+                        <div class="relative">
+                            <button id="userMenuButton" class="flex items-center space-x-2 focus:outline-none">
+                                <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i data-lucide="user" class="w-4 h-4 text-gray-600"></i>
+                                </div>
+                                <span class="hidden md:inline-block">Jeff Marlin</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </button>
+                            <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add account</a>
+                                <div class="border-t border-gray-200"></div>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Resource Management -->
+            <main class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Resource Management</h2>
+
+                <!-- Resource Search and Filter -->
+                <div class="bg-white p-6 rounded-lg shadow mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Find Resources</h3>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="relative flex-grow">
+                            <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Search by resource name or ID..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <select class="filter-select px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Filter by Type</option>
+                            <option value="server">Server</option>
+                            <option value="database">Database</option>
+                            <option value="application">Application</option>
+                        </select>
+                        <select class="filter-select px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Filter by Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Resource Inventory -->
+                <div class="bg-white p-6 rounded-lg shadow mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Resource Inventory</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Web Server 01</p>
+                                    <p class="text-xs text-gray-500">ID: SRV-001 | Type: Server</p>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-xs text-gray-500">Owner: IT Ops</p>
+                                <p class="text-xs text-gray-500">Access: Admin, Dev Team</p>
+                                <p class="text-xs text-gray-500">Last Updated: 2025-05-28 14:00</p>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-900">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Customer DB</p>
+                                    <p class="text-xs text-gray-500">ID: DB-003 | Type: Database</p>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Maintenance</span>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-xs text-gray-500">Owner: Data Team</p>
+                                <p class="text-xs text-gray-500">Access: Data Analysts</p>
+                                <p class="text-xs text-gray-500">Last Updated: 2025-05-28 15:30</p>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-900">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">CRM App</p>
+                                    <p class="text-xs text-gray-500">ID: APP-005 | Type: Application</p>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-xs text-gray-500">Owner: Sales Team</p>
+                                <p class="text-xs text-gray-500">Access: Sales, Support</p>
+                                <p class="text-xs text-gray-500">Last Updated: 2025-05-28 16:00</p>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-900">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Backup Server</p>
+                                    <p class="text-xs text-gray-500">ID: SRV-002 | Type: Server</p>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-xs text-gray-500">Owner: IT Ops</p>
+                                <p class="text-xs text-gray-500">Access: Admin</p>
+                                <p class="text-xs text-gray-500">Last Updated: 2025-05-27 10:00</p>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-900">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Utilization -->
+                <div class="bg-white p-6 rounded-lg shadow mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Resource Utilization</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm text-gray-700 mb-1">
+                                <span>Web Server 01 - CPU Usage</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm text-gray-700 mb-1">
+                                <span>Customer DB - Storage</span>
+                                <span>60%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-600 h-2.5 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm text-gray-700 mb-1">
+                                <span>CRM App - Memory Usage</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm text-gray-700 mb-1">
+                                <span>Backup Server - Disk Usage</span>
+                                <span>20%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-orange-600 h-2.5 rounded-full" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Allocation Requests -->
+                <div class="bg-white p-6 rounded-lg shadow mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Resource Allocation Requests</h3>
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-4 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Sales Team</p>
+                                <p class="text-xs text-gray-500">Requested: New Application Server | 2025-05-28 16:45</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700">Approve</button>
+                                <button class="px-3 py-1 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">Reject</button>
+                            </div>
+                        </div>
+                        <div class="py-4 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Data Team</p>
+                                <p class="text-xs text-gray-500">Requested: Additional Database Storage | 2025-05-28 15:00</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700">Approve</button>
+                                <button class="px-3 py-1 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">Allocate Resource</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200">Decommission</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200">Update Access</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200">View Audit Trail</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Toggle sidebar
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('collapsed');
+            
+            const icon = this.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                lucide.createIcon('chevron-right', icon);
+            } else {
+                lucide.createIcon('chevron-left', icon);
+            }
+        });
+        
+        // Toggle user menu
+        document.getElementById('userMenuButton').addEventListener('click', function() {
+            document.getElementById('userMenu').classList.toggle('hidden');
+        });
+        
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            const userMenuButton = document.getElementById('userMenuButton');
+            
+            if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+                userMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
