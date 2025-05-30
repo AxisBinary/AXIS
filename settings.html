@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AXIS Security Dashboard - Access</title>
+    <title>AXIS Security Dashboard - Settings</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
         .sidebar {
             transition: all 0.3s ease;
@@ -49,7 +52,6 @@
         .sidebar-divider {
             border-bottom-width: 1px;
         }
-        /* Custom Scrollbar Styles */
         *::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -68,10 +70,60 @@
         *::-webkit-scrollbar-button {
             display: none;
         }
-        /* Firefox Scrollbar */
         * {
             scrollbar-width: thin;
             scrollbar-color: #0284c7 #f1f5f9;
+        }
+        select.filter-select {
+            padding-right: 3rem; /* Right padding for filter box arrows */
+        }
+        /* Small iPhone-style toggle switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .toggle-label {
+            font-size: 0.75rem; /* text-xs */
+            color: #6b7280;
+        }
+        .toggle {
+            position: relative;
+            width: 24px;
+            height: 14px;
+        }
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db; /* gray-300 */
+            transition: 0.3s;
+            border-radius: 14px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 1px;
+            bottom: 1px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #0284c7; /* AXIS blue */
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(10px);
         }
     </style>
 </head>
@@ -82,8 +134,8 @@
             <div class="p-4 border-b sidebar-divider border-gray-200 flex justify-between items-center">
                 <h1 class="text-xl font-bold text-gray-800 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-sky-600 mr-1.5 group-hover:text-sky-700 transition-colors">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
-                        <path d="m9 12 2 2 4-4"/>
+                        <path d="M12 22s8-4 8-10V5 l-8-3-8 3v7c0 6 8 10 8 10"/>
+                        <path d="m9 12 l 2 2 4-4"/>
                     </svg>
                     <span class="nav-text">AXIS</span>
                 </h1>
@@ -101,7 +153,7 @@
                         </a>
                     </li>
                     <li class="mb-2 nav-item">
-                        <a href="access.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 active">
+                        <a href="access.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
                             <i data-lucide="key" class="w-5 h-5"></i>
                             <span class="nav-text ml-3">Access</span>
                         </a>
@@ -145,7 +197,7 @@
                         </a>
                     </li>
                     <li class="mb-2 nav-item">
-                        <a href="settings.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                        <a href="settings.html" class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100 active">
                             <i data-lucide="settings" class="w-5 h-5"></i>
                             <span class="nav-text ml-3">Settings</span>
                         </a>
@@ -187,114 +239,101 @@
                 </div>
             </header>
 
-            <!-- Access Management -->
+            <!-- Settings Management -->
             <main class="p-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Access Management</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Settings</h2>
 
-                <!-- Search and Filter -->
+                <!-- Settings Filter -->
                 <div class="bg-white p-6 rounded-lg shadow mb-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Search Users</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Filter Settings</h3>
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="relative flex-grow">
                             <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Search by name or email..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" placeholder="Search settings..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
-                        <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">Filter by Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                            <option value="guest">Guest</option>
+                        <select class="filter-select px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Filter by Category</option>
+                            <option value="alerts">Alerts</option>
+                            <option value="theme">Theme</option>
+                            <option value="notifications">Notifications</option>
+                            <option value="updates">Updates</option>
+                            <option value="authentication">Authentication</option>
+                            <option value="sound">Sound</option>
+                            <option value="session">Session</option>
+                            <option value="encryption">Encryption</option>
                         </select>
-                        <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">Filter by Status</option>
-                            <option value="active">Active</option>
-                            <option value="suspended">Suspended</option>
-                            <option value="pending">Pending</option>
-                        </select>
                     </div>
                 </div>
 
-                <!-- User Management Panel -->
+                <!-- Settings Category -->
                 <div class="bg-white p-6 rounded-lg shadow mb-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Manage User Permissions</h3>
-                    <div class="divide-y divide-gray-200">
-                        <div class="py-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">Alice Smith</p>
-                                <p class="text-xs text-gray-500">alice.smith@axis.com | Last Login: 2025-05-28 15:45</p>
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <select class="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="admin">Admin</option>
-                                    <option value="user">User</option>
-                                    <option value="guest">Guest</option>
-                                </select>
-                                <label class="flex items-center space-x-2">
-                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
-                                    <span class="text-sm text-gray-700">2FA Enabled</span>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Settings</h3>
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-sm font-semibold text-gray-900">General Settings</h4>
+                            <button class="text-blue-600 hover:text-blue-900">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="mt-2 space-y-2">
+                            <div class="toggle-container">
+                                <span class="toggle-label">Enable Alerts</span>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
                                 </label>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="lock" class="w-4 h-4"></i>
-                                </button>
                             </div>
-                        </div>
-                        <div class="py-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">Bob Johnson</p>
-                                <p class="text-xs text-gray-500">bob.johnson@axis.com | Last Login: 2025-05-28 14:20</p>
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <select class="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="admin">Admin</option>
-                                    <option value="user" selected>User</option>
-                                    <option value="guest">Guest</option>
-                                </select>
-                                <label class="flex items-center space-x-2">
-                                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
-                                    <span class="text-sm text-gray-700">2FA Enabled</span>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Dark Mode</span>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
                                 </label>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="lock" class="w-4 h-4"></i>
-                                </button>
                             </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Email Notifications</span>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Auto-Updates</span>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Two-Factor Authentication</span>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Sound Alerts</span>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Session Timeout</span>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-container">
+                                <span class="toggle-label">Data Encryption</span>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:54</p>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Access Request Log -->
-                <div class="bg-white p-6 rounded-lg shadow mb-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Access Request Log</h3>
-                    <div class="divide-y divide-gray-200">
-                        <div class="py-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">Carol White</p>
-                                <p class="text-xs text-gray-500">Requested Admin Role | 2025-05-28 16:00</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button class="px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700">Approve</button>
-                                <button class="px-3 py-1 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">Reject</button>
-                            </div>
-                        </div>
-                        <div class="py-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">David Lee</p>
-                                <p class="text-xs text-gray-500">Requested Resource Access | 2025-05-28 15:30</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button class="px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700">Approve</button>
-                                <button class="px-3 py-1 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">Reject</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-                    <div class="flex space-x-4">
-                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">Reset Password</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200">Export Access Logs</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200">Configure Policies</button>
                     </div>
                 </div>
             </main>
