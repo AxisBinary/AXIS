@@ -1,27 +1,38 @@
 import json
 import sys
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
+from datetime import date
 
 def validate_login(access_code, password):
     try:
+        # Check MongoDB connection
+        client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=5000)
+        client.admin.command('ping')  # Test connection
+        db = client['axislimited']
+        collection = db['axislimited']
+
         # Check for empty fields
         if not access_code:
             return {'success': False, 'message': 'Access code is required'}
         if not password:
             return {'success': False, 'message': 'Password is required'}
 
-        # Connect to MongoDB
-        client = MongoClient('mongodb://localhost:27017/')
-        db = client['axislimited']
-        collection = db['axislimited']
-
         # Find user with matching access_code (with dashes) and password
         user = collection.find_one({'access_code': access_code, 'password': password})
 
         if user:
+            # Check if activation_date is null and update to current date
+            if user.get('activation_date') is None:
+                collection.update_one(
+                    {'access_code': access_code, 'password': password},
+                    {'$set': {'activation_date': date.today().isoformat()}}  # e.g., "2025-05-30"
+                )
             return {'success': True, 'message': 'Login successful'}
         else:
             return {'success': False, 'message': 'Invalid access code or password'}
+    except ConnectionFailure:
+        return {'success': False, 'message': 'MongoDB is not connected'}
     except Exception as e:
         return {'success': False, 'message': f'Server error: {str(e)}'}
 

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { PythonShell } = require('python-shell');
 
 let mainWindow;
+let isMongoConnected = false;
 
 async function connectToMongoDB() {
   try {
@@ -11,8 +12,10 @@ async function connectToMongoDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
+    isMongoConnected = true;
     console.log('Connected to MongoDB (axislimited database)');
   } catch (err) {
+    isMongoConnected = false;
     console.error('MongoDB connection error:', err);
   }
 }
@@ -52,6 +55,11 @@ app.on('window-all-closed', () => {
 
 // IPC to handle login requests
 ipcMain.on('login-request', (event, { accessCode, accessPassword }) => {
+  if (!isMongoConnected) {
+    event.reply('login-response', { success: false, message: 'MongoDB is not connected' });
+    return;
+  }
+
   let pyshell = new PythonShell('backend.py', {
     mode: 'json',
     pythonOptions: ['-u']
@@ -65,7 +73,7 @@ ipcMain.on('login-request', (event, { accessCode, accessPassword }) => {
 
   pyshell.on('error', (err) => {
     console.error('Python script error:', err);
-    event.reply('login-response', { success: false, message: 'Server error' });
+    event.reply('login-response', { success: False, message: 'Server error' });
   });
 });
 
