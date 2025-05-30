@@ -215,131 +215,200 @@
                 </div>
 
                 <!-- System Specifications -->
+                <!-- Replace the "System Specifications" section with this -->
                 <div class="bg-white p-6 rounded-lg shadow mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">System Specifications</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- CPU -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900">CPU</h4>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-500">Model: AMD Ryzen 7 5800X</p>
-                                <p class="text-xs text-gray-500">Cores: 8</p>
-                                <p class="text-xs text-gray-500">Threads: 16</p>
-                                <p class="text-xs text-gray-500">Base Clock: 3.8 GHz</p>
-                                <p class="text-xs text-gray-500">Boost Clock: 4.7 GHz</p>
-                                <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:30</p>
-                            </div>
-                        </div>
-
-                        <!-- GPU -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900">GPU</h4>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-500">Model: NVIDIA GeForce RTX 3060 Ti</p>
-                                <p class="text-xs text-gray-500">VRAM: 8 GB GDDR6</p>
-                                <p class="text-xs text-gray-500">Core Clock: 1410 MHz</p>
-                                <p class="text-xs text-gray-500">Boost Clock: 1665 MHz</p>
-                                <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:30</p>
-                            </div>
-                        </div>
-
-                        <!-- Network -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900">Network</h4>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-500">Adapter: Intel Wi-Fi 6E</p>
-                                <p class="text-xs text-gray-500">Speed: 2400 Mbps</p>
-                                <p class="text-xs text-gray-500">Type: Wireless (802.11ax)</p>
-                                <p class="text-xs text-gray-500">IP Address: 192.168.1.100</p>
-                                <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:30</p>
-                            </div>
-                        </div>
-
-                        <!-- Memory -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900">Memory</h4>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-500">Total: 32 GB</p>
-                                <p class="text-xs text-gray-500">Type: DDR4</p>
-                                <p class="text-xs text-gray-500">Speed: 3200 MHz</p>
-                                <p class="text-xs text-gray-500">Used: 12.8 GB (40%)</p>
-                                <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:30</p>
-                            </div>
-                        </div>
-
-                        <!-- Storage -->
-                        <div class="border border-gray-200 rounded-lg p-4">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900">Storage</h4>
-                                <button class="text-blue-600 hover:text-blue-900">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-500">Type: NVMe SSD</p>
-                                <p class="text-xs text-gray-500">Total: 1 TB</p>
-                                <p class="text-xs text-gray-500">Used: 450 GB</p>
-                                <p class="text-xs text-gray-500">Free: 550 GB</p>
-                                <p class="text-xs text-gray-500">Last Updated: 2025-05-30 11:30</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="specs-container">
+                    <!-- Spec cards will be populated by JavaScript -->
+                </div>
                 </div>
             </main>
         </div>
     </div>
-
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-        
-        // Toggle sidebar
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('collapsed');
-            
-            const icon = this.querySelector('i');
-            if (sidebar.classList.contains('collapsed')) {
-                lucide.createIcon('chevron-right', icon);
-            } else {
-                lucide.createIcon('chevron-left', icon);
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Sidebar toggle logic
+  document.getElementById('toggleSidebar').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+    const icon = this.querySelector('i');
+    if (sidebar.classList.contains('collapsed')) {
+      lucide.createIcon('chevron-right', icon);
+    } else {
+      lucide.createIcon('chevron-left', icon);
+    }
+  });
+
+  // User menu toggle
+  document.getElementById('userMenuButton').addEventListener('click', function() {
+    document.getElementById('userMenu').classList.toggle('hidden');
+  });
+
+  // Close user menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const userMenu = document.getElementById('userMenu');
+    const userMenuButton = document.getElementById('userMenuButton');
+    if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
+      userMenu.classList.add('hidden');
+    }
+  });
+
+  // Filtering logic
+  const searchInput = document.querySelector('input[placeholder="Search specs..."]');
+  const filterSelect = document.querySelector('select.filter-select');
+  const specCards = document.querySelectorAll('.grid > div.border');
+
+  function filterSpecs() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const categoryFilter = filterSelect.value.toLowerCase();
+
+    specCards.forEach(card => {
+      const title = card.querySelector('h4').textContent.toLowerCase();
+      const content = card.textContent.toLowerCase();
+
+      // Check category match (title) and search term in content
+      const matchesCategory = !categoryFilter || title === categoryFilter;
+      const matchesSearch = !searchTerm || content.includes(searchTerm);
+
+      if (matchesCategory && matchesSearch) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  searchInput.addEventListener('input', filterSpecs);
+  filterSelect.addEventListener('change', filterSpecs);
+
+  // Refresh buttons functionality
+  specCards.forEach(card => {
+    const refreshBtn = card.querySelector('button');
+    refreshBtn.addEventListener('click', () => {
+      // Simulate update of last updated timestamp
+      const lastUpdatedElem = Array.from(card.querySelectorAll('p')).find(p => p.textContent.startsWith('Last Updated'));
+      if (lastUpdatedElem) {
+        const now = new Date();
+        const formatted = now.toISOString().slice(0, 16).replace('T', ' ');
+        lastUpdatedElem.textContent = `Last Updated: ${formatted}`;
+      }
+    });
+  });
+
+// Function to format spec data for display
+    function formatSpecData(spec, type) {
+        let html = '';
+        for (const [key, value] of Object.entries(spec)) {
+            if (key !== 'last_updated') {
+                html += `<p class="text-xs text-gray-500">${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${value}</p>`;
             }
-        });
-        
-        // Toggle user menu
-        document.getElementById('userMenuButton').addEventListener('click', function() {
-            document.getElementById('userMenu').classList.toggle('hidden');
-        });
-        
-        // Close user menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const userMenu = document.getElementById('userMenu');
-            const userMenuButton = document.getElementById('userMenuButton');
+        }
+        html += `<p class="text-xs text-gray-500">Last Updated: ${spec.last_updated}</p>`;
+        return html;
+    }
+
+    // Function to fetch and display specs
+    async function fetchAndDisplaySpecs() {
+        try {
+            const response = await fetch('/api/specs');
+            const data = await response.json();
             
-            if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
-                userMenu.classList.add('hidden');
-            }
-        });
-    </script>
+            const container = document.getElementById('specs-container');
+            container.innerHTML = '';
+            
+            // CPU Card
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">CPU</h4>
+                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="cpu-specs">
+                        ${formatSpecData(data.cpu, 'cpu')}
+                    </div>
+                </div>
+            `;
+            
+            // GPU Card
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">GPU</h4>
+                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="gpu-specs">
+                        ${formatSpecData(data.gpu, 'gpu')}
+                    </div>
+                </div>
+            `;
+            
+            // Network Card
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">Network</h4>
+                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="network-specs">
+                        ${formatSpecData(data.network, 'network')}
+                    </div>
+                </div>
+            `;
+            
+            // Memory Card
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">Memory</h4>
+                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="memory-specs">
+                        ${formatSpecData(data.memory, 'memory')}
+                    </div>
+                </div>
+            `;
+            
+            // Storage Card
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">Storage</h4>
+                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="storage-specs">
+                        ${formatSpecData(data.storage, 'storage')}
+                    </div>
+                </div>
+            `;
+            
+            // Refresh Lucide icons after dynamic content is added
+            lucide.createIcons();
+            
+        } catch (error) {
+            console.error('Error fetching system specs:', error);
+        }
+    }
+
+    // Function to refresh specs
+    function refreshSpecs() {
+        fetchAndDisplaySpecs();
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', fetchAndDisplaySpecs);
+</script>
+
 </body>
 </html>
