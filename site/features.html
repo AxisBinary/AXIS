@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS Security - Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .hero-image {
+            background: linear-gradient(145deg, #e0e7ff, #c7d2fe);
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn {
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1e3a8a;
+            box-shadow: 0 2px 10px rgba(30, 58, 138, 0.3);
+        }
+        /* Custom Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            transition: width 0.3s ease;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 4px;
+            transition: background 0.3s ease, width 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+            width: 10px;
+        }
+        /* For Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #f1f5f9;
+            transition: scrollbar-width 0.3s ease;
+        }
+        /* Cool Navbar Styles */
+        .navbar-item {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .navbar-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #6366f1, #9333ea);
+            transition: width 0.3s ease-in-out;
+        }
+        .navbar-item:hover::after {
+            width: 100%;
+        }
+        .navbar-item:hover {
+            color: #4f46e5;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen transition-background duration-300">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-6 flex items-center justify-between fixed w-full z-10 transition-shadow duration-300">
+        <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-indigo-600 mr-1.5 group-hover:text-indigo-700 transition-colors duration-300"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span class="text-xl font-bold text-gray-800 transition-color duration-300">AXIS</span>
+        </div>
+        <nav class="flex items-center space-x-6">
+            <a href="#" class="navbar-item text-gray-600 text-sm font-medium">Features</a>
+            <a href="#" class="navbar-item text-gray-600 text-sm font-medium">Pricing</a>
+            <a href="#" class="navbar-item text-gray-600 text-sm font-medium">Learn</a>
+            <a href="#" class="navbar-item text-gray-600 text-sm font-medium">Support</a>
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300 text-sm font-medium">Sign Up</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 flex flex-col items-center justify-center max-w-7xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold text-gray-900 leading-tight mb-4 transition-color duration-300">
+                Discover AXIS Features
+            </h1>
+            <p class="text-gray-600 mb-6 transition-color duration-300">
+                Explore the powerful tools that keep your digital life secure and seamless.
+            </p>
+            <button class="bg-indigo-600 text-white px-6 py-3 rounded-md text-sm font-medium btn hover:bg-indigo-700 transition-colors duration-300" onclick="window.location.href='#pricing'">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-white transition-background duration-300">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-gray-900 mb-12 text-center transition-color duration-300">Our Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Real-Time Threat Detection -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Real-Time Threat Detection</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Stay protected with instant detection and neutralization of threats as they emerge.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ Detects malware, ransomware, and phishing</li>
+                            <li>✔ Instant alerts and automatic responses</li>
+                            <li>✔ Continuously updated threat database</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+                <!-- Secure Browsing -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Secure Browsing</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Browse with confidence knowing your online activity is safeguarded.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ Blocks malicious websites</li>
+                            <li>✔ Encrypts your browsing data</li>
+                            <li>✔ Prevents tracking and ads</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+                <!-- Device Protection -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Device Protection</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Shield your devices from vulnerabilities with comprehensive security.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ Protects multiple devices</li>
+                            <li>✔ Regular security scans</li>
+                            <li>✔ Remote lock and wipe</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+                <!-- Parental Controls -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Parental Controls</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Manage and protect your family's online experience.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ Content filtering</li>
+                            <li>✔ Screen time management</li>
+                            <li>✔ Activity monitoring</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+                <!-- Advanced Encryption -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Advanced Encryption</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Ensure your data is protected with top-tier encryption technology.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ End-to-end encryption</li>
+                            <li>✔ Secure file storage</li>
+                            <li>✔ Data breach prevention</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+                <!-- Multi-Device Support -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 transition-color duration-300">Multi-Device Support</h3>
+                        <p class="text-gray-600 text-sm mb-4 transition-color duration-300">
+                            Secure all your devices under one account with ease.
+                        </p>
+                        <ul class="text-gray-600 text-sm mb-4 space-y-2 transition-color duration-300">
+                            <li>✔ Supports up to 10 devices</li>
+                            <li>✔ Centralized management</li>
+                            <li>✔ Cross-platform compatibility</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium btn w-full transition-all duration-300">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // No specific JavaScript needed for this page yet
+    </script>
+</body>
+</html>
