@@ -77,9 +77,39 @@
         select.filter-select {
             padding-right: 3rem; /* Right padding for filter box arrows */
         }
+        /* Loader Styles */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .loader {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #0284c7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Loader Overlay -->
+    <div id="loaderOverlay" class="loader-overlay">
+        <div class="loader"></div>
+    </div>
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="sidebar bg-white shadow-md w-64 fixed h-full flex flex-col">
@@ -215,200 +245,167 @@
                 </div>
 
                 <!-- System Specifications -->
-                <!-- Replace the "System Specifications" section with this -->
                 <div class="bg-white p-6 rounded-lg shadow mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">System Specifications</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="specs-container">
-                    <!-- Spec cards will be populated by JavaScript -->
-                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="specs-container">
+                        <!-- Spec cards will be populated by JavaScript -->
+                    </div>
                 </div>
             </main>
         </div>
     </div>
-    <script>
-  // Initialize Lucide icons
-  lucide.createIcons();
+            <script>
+                // Initialize Lucide icons
+lucide.createIcons();
 
-  // Sidebar toggle logic
-  document.getElementById('toggleSidebar').addEventListener('click', function() {
+// Sidebar toggle logic
+document.getElementById('toggleSidebar').addEventListener('click', function() {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.toggle('collapsed');
     const icon = this.querySelector('i');
     if (sidebar.classList.contains('collapsed')) {
-      lucide.createIcon('chevron-right', icon);
+        lucide.createIcon('chevron-right', icon);
     } else {
-      lucide.createIcon('chevron-left', icon);
+        lucide.createIcon('chevron-left', icon);
     }
-  });
+});
 
-  // User menu toggle
-  document.getElementById('userMenuButton').addEventListener('click', function() {
+// User menu toggle
+document.getElementById('userMenuButton').addEventListener('click', function() {
     document.getElementById('userMenu').classList.toggle('hidden');
-  });
+});
 
-  // Close user menu when clicking outside
-  document.addEventListener('click', function(event) {
+// Close user menu when clicking outside
+document.addEventListener('click', function(event) {
     const userMenu = document.getElementById('userMenu');
     const userMenuButton = document.getElementById('userMenuButton');
     if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
-      userMenu.classList.add('hidden');
+        userMenu.classList.add('hidden');
     }
-  });
+});
 
-  // Filtering logic
-  const searchInput = document.querySelector('input[placeholder="Search specs..."]');
-  const filterSelect = document.querySelector('select.filter-select');
-  const specCards = document.querySelectorAll('.grid > div.border');
+// Filtering logic
+const searchInput = document.querySelector('input[placeholder="Search specs..."]');
+const filterSelect = document.querySelector('select.filter-select');
+const specCards = document.querySelectorAll('.grid > div.border');
 
-  function filterSpecs() {
+function filterSpecs() {
     const searchTerm = searchInput.value.toLowerCase();
     const categoryFilter = filterSelect.value.toLowerCase();
 
     specCards.forEach(card => {
-      const title = card.querySelector('h4').textContent.toLowerCase();
-      const content = card.textContent.toLowerCase();
+        const title = card.querySelector('h4').textContent.toLowerCase();
+        const content = card.textContent.toLowerCase();
 
-      // Check category match (title) and search term in content
-      const matchesCategory = !categoryFilter || title === categoryFilter;
-      const matchesSearch = !searchTerm || content.includes(searchTerm);
+        // Check category match (title) and search term in content
+        const matchesCategory = !categoryFilter || title === categoryFilter;
+        const matchesSearch = !searchTerm || content.includes(searchTerm);
 
-      if (matchesCategory && matchesSearch) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
+        if (matchesCategory && matchesSearch) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
     });
-  }
+}
 
-  searchInput.addEventListener('input', filterSpecs);
-  filterSelect.addEventListener('change', filterSpecs);
+searchInput.addEventListener('input', filterSpecs);
+filterSelect.addEventListener('change', filterSpecs);
 
-  // Refresh buttons functionality
-  specCards.forEach(card => {
+// Refresh buttons functionality
+specCards.forEach(card => {
     const refreshBtn = card.querySelector('button');
     refreshBtn.addEventListener('click', () => {
-      // Simulate update of last updated timestamp
-      const lastUpdatedElem = Array.from(card.querySelectorAll('p')).find(p => p.textContent.startsWith('Last Updated'));
-      if (lastUpdatedElem) {
-        const now = new Date();
-        const formatted = now.toISOString().slice(0, 16).replace('T', ' ');
-        lastUpdatedElem.textContent = `Last Updated: ${formatted}`;
-      }
+        // Simulate update of last updated timestamp
+        const lastUpdatedElem = Array.from(card.querySelectorAll('p')).find(p => p.textContent.startsWith('Last Updated'));
+        if (lastUpdatedElem) {
+            const now = new Date();
+            const formatted = now.toISOString().slice(0, 16).replace('T', ' ');
+            lastUpdatedElem.textContent = `Last Updated: ${formatted}`;
+        }
     });
-  });
+});
 
 // Function to format spec data for display
-    function formatSpecData(spec, type) {
-        let html = '';
-        for (const [key, value] of Object.entries(spec)) {
-            if (key !== 'last_updated') {
-                html += `<p class="text-xs text-gray-500">${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${value}</p>`;
-            }
-        }
-        html += `<p class="text-xs text-gray-500">Last Updated: ${spec.last_updated}</p>`;
-        return html;
-    }
-
-    // Function to fetch and display specs
-    async function fetchAndDisplaySpecs() {
-        try {
-            const response = await fetch('/api/specs');
-            const data = await response.json();
-            
-            const container = document.getElementById('specs-container');
-            container.innerHTML = '';
-            
-            // CPU Card
-            container.innerHTML += `
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-sm font-semibold text-gray-900">CPU</h4>
-                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2" id="cpu-specs">
-                        ${formatSpecData(data.cpu, 'cpu')}
-                    </div>
-                </div>
-            `;
-            
-            // GPU Card
-            container.innerHTML += `
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-sm font-semibold text-gray-900">GPU</h4>
-                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2" id="gpu-specs">
-                        ${formatSpecData(data.gpu, 'gpu')}
-                    </div>
-                </div>
-            `;
-            
-            // Network Card
-            container.innerHTML += `
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-sm font-semibold text-gray-900">Network</h4>
-                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2" id="network-specs">
-                        ${formatSpecData(data.network, 'network')}
-                    </div>
-                </div>
-            `;
-            
-            // Memory Card
-            container.innerHTML += `
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-sm font-semibold text-gray-900">Memory</h4>
-                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2" id="memory-specs">
-                        ${formatSpecData(data.memory, 'memory')}
-                    </div>
-                </div>
-            `;
-            
-            // Storage Card
-            container.innerHTML += `
-                <div class="border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-sm font-semibold text-gray-900">Storage</h4>
-                        <button class="text-blue-600 hover:text-blue-900" onclick="refreshSpecs()">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="mt-2" id="storage-specs">
-                        ${formatSpecData(data.storage, 'storage')}
-                    </div>
-                </div>
-            `;
-            
-            // Refresh Lucide icons after dynamic content is added
-            lucide.createIcons();
-            
-        } catch (error) {
-            console.error('Error fetching system specs:', error);
+function formatSpecData(spec) {
+    let html = '';
+    for (const [key, value] of Object.entries(spec)) {
+        if (key !== 'last_updated') {
+            html += `<p class="text-xs text-gray-500">${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${value}</p>`;
         }
     }
+    html += `<p class="text-xs text-gray-500">Last Updated: ${spec.last_updated}</p>`;
+    return html;
+}
 
-    // Function to refresh specs
-    function refreshSpecs() {
-        fetchAndDisplaySpecs();
+// Helper function to format titles:
+// CPU and GPU fully uppercase; others capitalize first letter only
+function formatTitle(type) {
+    if (type === 'cpu' || type === 'gpu') {
+        return type.toUpperCase();
     }
+    return type.charAt(0).toUpperCase() + type.slice(1);
+}
 
-    // Initial load
-    document.addEventListener('DOMContentLoaded', fetchAndDisplaySpecs);
-</script>
+// Function to fetch and display specs
+async function fetchAndDisplaySpecs() {
+    try {
+        const response = await fetch('/api/specs');
+        const data = await response.json();
 
+        const container = document.getElementById('specs-container');
+        container.innerHTML = '';
+
+        const specsList = ['cpu', 'gpu', 'network', 'memory', 'storage'];
+
+        specsList.forEach(type => {
+            container.innerHTML += `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-semibold text-gray-900">${formatTitle(type)}</h4>
+                        <button class="text-blue-600 hover:text-blue-900 refresh-btn" data-type="${type}">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2" id="${type}-specs">
+                        ${formatSpecData(data[type])}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Refresh Lucide icons after dynamic content is added
+        lucide.createIcons();
+
+        // Attach refresh button event listeners after DOM update
+        document.querySelectorAll('.refresh-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                refreshSpecs();
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching system specs:', error);
+    }
+}
+
+// Function to refresh specs
+function refreshSpecs() {
+    fetchAndDisplaySpecs();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    fetchAndDisplaySpecs();
+});
+
+// Show loader on page load and hide after 2 seconds
+window.addEventListener('load', function() {
+    const loaderOverlay = document.getElementById('loaderOverlay');
+    setTimeout(() => {
+        loaderOverlay.style.display = 'none';
+    }, 2000); // Loader displays for 2 seconds
+});
+
+            </script>
 </body>
 </html>

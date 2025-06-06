@@ -11,20 +11,17 @@ import os
 app = Flask(__name__)
 
 def get_drive_type_windows(mountpoint):
-    """Detect drive type (SSD/HDD) on Windows"""
     try:
-        drive_letter = mountpoint[:2]  # Get 'C:' from 'C:\\'
+        drive_letter = mountpoint[:2]
         kernel32 = ctypes.windll.kernel32
-        buf = ctypes.create_string_buffer(1024)
         flags = ctypes.c_ulong()
-        
         if kernel32.GetVolumeInformationA(
             ctypes.c_char_p(drive_letter.encode()),
             None, 0,
             None, ctypes.byref(flags), None,
             None, 0
         ):
-            if flags.value & 0x00000020:  # FILE_FLASH_SSD
+            if flags.value & 0x00000020:
                 return "SSD"
             return "HDD"
     except Exception:
@@ -32,20 +29,17 @@ def get_drive_type_windows(mountpoint):
     return "Unknown"
 
 def get_system_specs():
-    # CPU Info
     cpu_info = cpuinfo.get_cpu_info()
     cpu_model = cpu_info.get('brand_raw', 'Unknown CPU')
     cpu_cores = psutil.cpu_count(logical=False)
     cpu_threads = psutil.cpu_count(logical=True)
     cpu_freq = psutil.cpu_freq()
-    
-    # Memory Info
+
     memory = psutil.virtual_memory()
     memory_total = round(memory.total / (1024 ** 3), 1)
     memory_used = round(memory.used / (1024 ** 3), 1)
     memory_percent = memory.percent
-    
-    # Storage Info
+
     storage_info = []
     for partition in psutil.disk_partitions():
         try:
@@ -53,11 +47,9 @@ def get_system_specs():
             total_gb = round(usage.total / (1024 ** 3), 1)
             used_gb = round(usage.used / (1024 ** 3), 1)
             free_gb = round(usage.free / (1024 ** 3), 1)
-            
             drive_type = "Unknown"
             if platform.system() == "Windows":
                 drive_type = get_drive_type_windows(partition.mountpoint)
-            
             storage_info.append({
                 'device': partition.device,
                 'mountpoint': partition.mountpoint,
@@ -69,8 +61,7 @@ def get_system_specs():
             })
         except Exception as e:
             print(f"Error reading partition {partition.mountpoint}: {e}")
-    
-    # Get primary storage (usually C: on Windows)
+
     primary_storage = storage_info[0] if storage_info else {
         'type': 'Unknown',
         'total': 0,
@@ -78,23 +69,20 @@ def get_system_specs():
         'free': 0,
         'percent': 0
     }
-    
-    # Network Info
+
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
     net_info = psutil.net_if_stats()
     net_adapter = list(net_info.keys())[0] if net_info else "Unknown"
     net_speed = net_info[net_adapter].speed if net_adapter in net_info else 0
-    
-    # GPU Info
+
     gpus = GPUtil.getGPUs()
-    gpu_info = {}
     if gpus:
         gpu = gpus[0]
         gpu_info = {
             'model': gpu.name,
             'vram': f"{gpu.memoryTotal} MB",
-            'core_clock': f"{gpu.load * 100}%",
+            'core_clock': f"{gpu.load * 100:.0f}%",
             'temperature': f"{gpu.temperature}°C"
         }
     else:
@@ -104,10 +92,9 @@ def get_system_specs():
             'core_clock': 'N/A',
             'temperature': 'N/A'
         }
-    
-    # Current timestamp
+
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    
+
     return {
         'cpu': {
             'model': cpu_model,
@@ -134,7 +121,7 @@ def get_system_specs():
         'network': {
             'adapter': net_adapter,
             'speed': f"{net_speed} Mbps" if net_speed > 0 else "Unknown",
-            'type': 'Wireless' if 'wireless' in net_adapter.lower() else 'Wired',
+            'type': 'Wireless' if any(x in net_adapter.lower() for x in ['wi-fi', 'wlan', 'wireless']) else 'Wired',
             'ip_address': ip_address,
             'last_updated': now
         },

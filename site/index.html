@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIS Security - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .hero-image {
+            background: linear-gradient(145deg, #e0e7ff, #c7d2fe);
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1e3a8a;
+        }
+        /* Custom Scrollbar Styles */
+        /* For WebKit browsers (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; /* slate-100 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1; /* indigo-500 */
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5; /* indigo-600 */
+        }
+        /* For Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #f1f5f9;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-indigo-600 mr-1.5 group-hover:text-indigo-700 transition-colors"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span class="text-xl font-bold text-gray-800">AXIS</span>
+        </div>
+        <nav class="flex items-center space-x-4">
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Features</a>
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Pricing</a>
+            <a href="#" class="text-gray-600 hover:text-indigo-600">Learn</a>
+            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">Sign Up</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-6 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+            <h1 class="text-5xl font-bold text-gray-900 leading-tight mb-4">
+                Secure your digital<br>life with ease.
+            </h1>
+            <p class="text-gray-600 mb-6">
+                Protect your devices, data, and privacy with AXIS's powerful security solutions, trusted by millions.
+            </p>
+            <div class="flex space-x-4">
+                <button class="bg-indigo-600 text-white px-6 py-3 rounded-md text-sm font-medium btn">Get Started</button>
+                <button class="border border-gray-300 text-gray-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors">Learn More</button>
+            </div>
+            <div class="mt-6 flex space-x-4">
+                <span class="text-gray-600 font-medium">Trusted by:</span>
+                <span class="text-gray-500">Kloma</span>
+                <span class="text-gray-500">CoinBase</span>
+                <span class="text-gray-500">Instacart</span>
+            </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <div class="hero-image p-6 relative">
+                <div class="bg-white rounded-lg shadow-lg p-4 w-80">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span class="font-semibold text-gray-800">Device Protection</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-2">Status: Secure</p>
+                    <p class="text-gray-500 text-xs">Last scan: 10:32 PM, June 06, 2025</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-gray-600 text-sm">Threats Blocked</span>
+                        <span class="text-indigo-600 font-semibold">234</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-200 rounded-full">
+                        <div class="h-full w-3/4 bg-indigo-600 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                        Protection that<br>grows with you.
+                    </h2>
+                    <p class="text-gray-600 mb-6">
+                        AXIS offers scalable security plans to safeguard your digital life, from individuals to businesses.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="card bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Core Protect</h3>
+                            <p class="text-gray-600 text-sm">Essential security for individuals with real-time threat detection.</p>
+                        </div>
+                        <div class="card bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Advanced Guard</h3>
+                            <p class="text-gray-600 text-sm">Comprehensive protection for families with parental controls.</p>
+                        </div>
+                        <div class="card bg-gray-50 p-4 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Elite Command</h3>
+                            <p class="text-gray-600 text-sm">Premium security for businesses with advanced encryption.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-indigo-600 rounded-2xl p-8 flex items-center justify-center">
+                        <div class="flex space-x-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16"/><path d="M9 12h6"/><path d="M9 12v3"/><path d="M15 12v3"/><path d="M21 12h-6"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // Add any interactivity here if needed
+    </script>
+</body>
+</html>
