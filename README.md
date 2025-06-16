@@ -67,7 +67,7 @@ Any disputes arising from this Agreement shall be resolved under the exclusive j
 ## 8. CONTACT
 
 For support, licensing, or any inquiries, please contact:  
-📧 **axisbinary@gmail.com**
+📧 **axisbinlabs@gmail.com**
 
 ---
 
